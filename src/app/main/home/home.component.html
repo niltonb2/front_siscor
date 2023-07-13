@@ -1,0 +1,39 @@
+<div class="content-wrapper container-xxl p-0">
+    <div class="content-body">
+        <section id="home-page">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body mt-1">
+                            <app-selecionar-estabelecimento></app-selecionar-estabelecimento>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-body">
+                            <app-datafromto></app-datafromto>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-body">
+                            <app-filtrostatus
+                            quantidadePagos={{pago}}
+                            quantidadeEmAberto={{emAberto}}
+                            quantidadePendentes={{pendente}}
+                            quantidadeVencidos={{vencido}}
+                            
+                            ></app-filtrostatus>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-body">
+                            <app-chart-dash></app-chart-dash>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>

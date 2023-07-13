@@ -1,0 +1,20 @@
+<app-card-principal
+    nomeBotao="Novo Estabelecimento"
+    #cardPrincipal
+    *ngIf="!cadastro && !editar"
+    (clickButton)="mostrarTelaCadastro()"
+    nomeEntidade="Estabelecimento"
+    corBotao="gradient-success">
+</app-card-principal>
+
+<app-cadastro-estabelecimento
+*ngIf="cadastro"
+(cadastroEstabelecimentoEvento)="fecharTelaCadastro()"
+>
+</app-cadastro-estabelecimento>
+
+<app-visualizar-editar-estabelecimento
+*ngIf="editar"
+(edicaoEstabelecimentoEvento)="fecharTelaEdicao()"
+>    
+</app-visualizar-editar-estabelecimento>

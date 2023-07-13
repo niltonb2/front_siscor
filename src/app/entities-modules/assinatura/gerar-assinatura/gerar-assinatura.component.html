@@ -1,0 +1,108 @@
+<div *ngIf="!cadastroCliente && !cadastroPlano" class="content-wrapper container-xxl p-0">
+    <div class="content-body">
+        <section id="home-page">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Nova Assinatura</h4>
+                        </div>
+
+                        <div class="card-body">
+
+                            <form class="form" [formGroup]="formularioAssinatura" (ngSubmit)="visualizarAssinatura()">
+                                <h5>Dados da Assinatura</h5>
+                                <div class="row">
+                                    <div class="form-group col-md-5">
+                                        <label class="form-label" for="cliente-input">Cliente *</label>
+                                        <div class="campo-cliente input-group input-group-merge">
+                                            <ng-select (input)="resumoAssinaturaTela()" (focus)="onChange()"
+                                                formControlName="pessoa" id="cliente-input"
+                                                [ngClass]="{ 'is-invalid': submitted && f_assinatura.pessoa.errors }">
+                                                <ng-option *ngFor="let c of clientesPorEstabelecimentos" [value]="c">
+                                                    {{c.nome}} </ng-option>
+                                            </ng-select>
+                                            <div class="input-group-append">
+                                                <button ngbTooltip="Novo Cliente" (click)="mostrarCadastroCliente()"
+                                                    rippleEffect class="btn btn-success" id="basic-addon-search2"><i
+                                                        data-feather="plus"></i></button>
+                                            </div>
+                                            <div *ngIf="submitted && f_assinatura.pessoa.errors"
+                                                class="invalid-feedback">
+                                                <div *ngIf="f_assinatura.pessoa.errors.required">Informe a pessoa</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-5">
+                                        <label class="form-label" for="plano-input">Plano *</label>
+                                        <div class="campo-cliente input-group input-group-merge">
+                                            <ng-select (focus)="getPlanos()" formControlName="plano" id="cliente-input"
+                                                [ngClass]="{ 'is-invalid': submitted && f_assinatura.pessoa.errors }">
+                                                <ng-option *ngFor="let p of planosPorEstabelecimentos" [value]="p">
+                                                    {{p.descricao}} </ng-option>
+                                            </ng-select>
+                                            <div class="input-group-append">
+                                                <button ngbTooltip="Novo Cliente" (click)="mostrarCadastroPlano()"
+                                                    rippleEffect class="btn btn-success" id="basic-addon-search2"><i
+                                                        data-feather="plus"></i></button>
+                                            </div>
+                                            <div *ngIf="submitted && f_assinatura.pessoa.errors"
+                                                class="invalid-feedback">
+                                                <div *ngIf="f_assinatura.pessoa.errors.required">Informe a pessoa</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label class="form-label" for="plano-input">Vencimento dia: *<app-infos-field
+                                                mensagem="Data gerada no dia em que a assinatura for criada">
+                                            </app-infos-field>
+                                        </label>
+
+                                        <ng-select [(ngModel)]="vencimentoDia" [ngModelOptions]=" {standalone: true}"
+                                            [ngClass]="{ 'is-invalid': submitted && !vencimentoDia }">
+                                            <ng-option *ngFor="let dia of diasMes" [value]="dia">
+                                                {{dia}} </ng-option>
+                                        </ng-select>
+
+                                        <div *ngIf="submitted && !vencimentoDia" class="invalid-feedback">
+                                            <div *ngIf="!vencimentoDia">Selecione o vencimento
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+
+                                    <div class="form-group col-md-12">
+                                        <label for="basicTextarea">Observações</label>
+                                        <fieldset class="form-group">
+                                            <textarea formControlName="observacoes" class="form-control"
+                                                id="basicTextarea" rows="3"
+                                                placeholder="Digite aqui qualquer informação relevante sobre a assinatura, cliente, plano, produtos ou serviços.">
+                                            </textarea>
+                                        </fieldset>
+                                    </div>
+
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-12 d-flex justify-content-end">
+                                        <button type="submit" rippleEffect class="btn btn-primary mr-1">Visualizar
+                                            Resumo da Assintaura</button>
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+<app-cadastro-pessoa-cliente *ngIf="cadastroCliente" (cadastroClienteEvento)="fecharTelaCadastroCliente()">
+</app-cadastro-pessoa-cliente>
+
+<app-gerar-plano (gerarPlanoEvento)="fecharTelaCadastroPlano()" *ngIf="cadastroPlano">
+</app-gerar-plano>

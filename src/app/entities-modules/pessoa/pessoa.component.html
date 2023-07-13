@@ -1,0 +1,18 @@
+<app-card-principal
+    nomeBotao="Novo Cliente"
+    *ngIf="!cadastro && !editar"
+    (clickButton)="mostrarTelaCadastro()"
+    nomeEntidade="Cliente"
+    corBotao="gradient-success"
+></app-card-principal>
+
+
+<app-cadastro-pessoa-cliente
+*ngIf="cadastro"
+(cadastroClienteEvento)="fecharTelaCadastro()"
+></app-cadastro-pessoa-cliente>
+
+<app-visualizar-editar-cliente
+    *ngIf="editar"
+    (edicaoClienteEvento)="fecharTelaEdicao()"
+></app-visualizar-editar-cliente>

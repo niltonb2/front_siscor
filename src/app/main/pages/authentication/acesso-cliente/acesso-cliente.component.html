@@ -1,0 +1,28 @@
+<div>
+    <div class="col-12 col-sm-8 col-md-6 col-lg-12 px-xl-2 mx-auto d-flex flex-column justify-content-center">
+        <p class="card-text mb-2">Insira o documento e verifique suas faturas.</p>
+        <ngb-alert [type]="'danger'" [dismissible]="false" *ngIf="error">
+            <div class="alert-body">
+                <p>{{ error }}</p>
+            </div>
+        </ngb-alert>
+
+        <form class="auth-login-form mt-2 form-login-width" [formGroup]="acessoForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+                <label class="form-label" for="login-email">Documento</label>
+                <input mask="CPF_CNPJ" type="text" formControlName="documento" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f_acesso.documento.errors }" placeholder="CPF/CNPJ"
+                    aria-describedby="login-email" autofocus="" tabindex="1" />
+                <div *ngIf="submitted && f_acesso.documento.errors" class="invalid-feedback">
+                    <div *ngIf="f_acesso.documento.required">Preencha o documento</div>
+                </div>
+            </div>
+            <button [disabled]="loading" class="btn btn-primary btn-block" tabindex="4" rippleEffect>
+                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>Entrar
+            </button>
+        </form>
+    </div>
+</div>
+<div class="father-alert mt-5">
+    <app-button-alert class="field-alert" *ngIf="fieldAlert" status="{{status}}" infoAlert="{{message}}"></app-button-alert>
+</div>

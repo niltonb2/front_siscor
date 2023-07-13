@@ -1,0 +1,29 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="myModalLabel1">Resumo da Assinatura</h4>
+    <button type="button" class="close" (click)="dismissModal()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="card-body">
+<p>
+    <strong>EMPRESA: </strong> {{resumoAssinatura.empresa}}
+</p>
+<p>
+    <strong>CLIENTE: </strong> {{resumoAssinatura.cliente}}
+</p>
+<p>
+    <strong>PLANO: </strong> {{resumoAssinatura.plano}}
+</p>
+<p>
+    <strong>PARCELA: </strong> {{resumoAssinatura.valor_parcela | currency: 'BRL'}}
+</p>
+<p>
+    <strong>INÍCIO: </strong> {{resumoAssinatura.data_inicio}}
+</p>
+<p>
+    <strong>FIM: </strong> {{resumoAssinatura.data_fim}}
+</p>
+</div>
+<div class="card-footer d-flex justify-content-end">
+    <button (click)="gerarAssinatura()" class="btn btn-success">Gerar Assinatura</button>
+</div>

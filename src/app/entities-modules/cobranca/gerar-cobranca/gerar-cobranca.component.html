@@ -1,0 +1,264 @@
+<div class="content-wrapper container-xxl p-0">
+    <div class="content-body">
+        <section id="home-page">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Nova Cobrança</h4>
+                            <button (click)="eventoGerarCobranca()" type="button" class="btn btn-secondary"
+                                rippleEffect>
+                                <i data-feather="x" class="font-medium-3"></i>
+                            </button>
+                        </div>
+                        <section class="vertical-wizard">
+                            <div id="cadastroEstabelecimento"
+                                class="bs-stepper vertical vertical-wizard-example body-cadastro-estabelecimento">
+                                <!-- HEADER -->
+                                <div class="bs-stepper-header header-cadastro-estabelecimento">
+                                    <div class="step" data-target="#account-details-vertical">
+                                        <button type="button" class="step-trigger">
+                                            <span class="bs-stepper-box">1</span>
+                                            <span class="bs-stepper-label">
+                                                <span class="bs-stepper-title">Dados da Cobrança</span>
+                                            </span>
+                                        </button>
+                                    </div>
+                                    <div class="step" data-target="#personal-info-vertical">
+                                        <button type="button" class="step-trigger">
+                                            <span class="bs-stepper-box">2</span>
+                                            <span class="bs-stepper-label">
+                                                <span class="bs-stepper-title">Observações</span>
+                                            </span>
+                                        </button>
+                                    </div>
+                                    <div class="step" data-target="#address-step-vertical">
+                                        <button type="button" class="step-trigger">
+                                            <span class="bs-stepper-box">3</span>
+                                            <span class="bs-stepper-label">
+                                                <span class="bs-stepper-title">Resumo</span>
+                                            </span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <!-- BODY -->
+                                <div class="bs-stepper-content">
+                                    <form [formGroup]="formularioCobranca" (ngSubmit)="gerarCobranca()">
+                                        <!-- DADOS COBRANÇA -->
+                                        <div id="account-details-vertical" class="content">
+                                            <div class="content-header">
+                                                <h5 class="mb-0">Dados da Cobrança</h5>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group col-md-6">
+                                                    <label>Estabelecimento *</label>
+                                                    <ng-select formControlName="estabelecimento"
+                                                        (change)="onChange($event)"
+                                                        [ngClass]="{ 'is-invalid': submitted && f_cobranca.estabelecimento.errors }">
+                                                        <ng-option *ngFor="let ec of estabelecimentosPorUsuario"
+                                                            [value]="ec.id">
+                                                            {{ec.nome}} </ng-option>
+                                                    </ng-select>
+                                                    <div *ngIf="submitted && f_cobranca.estabelecimento.errors"
+                                                        class="invalid-feedback">
+                                                        <div *ngIf="f_cobranca.estabelecimento.errors.required">
+                                                            Selecione um Estabelecimento</div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label class="form-label" for="cliente-input">Cliente *</label>
+                                                    <div class="campo-cliente input-group input-group-merge">
+                                                        <ng-select 
+                                                        formControlName="pessoa" id="cliente-input"
+                                                            [ngClass]="{ 'is-invalid': submitted && f_cobranca.pessoa.errors }">
+                                                            <ng-option *ngFor="let c of clientesPorEstabelecimentos"
+                                                                [value]="c.id">
+                                                                {{c.nome}} </ng-option>
+                                                        </ng-select>
+                                                        <div class="input-group-append">
+                                                            <button ngbTooltip="Novo Cliente" (click)="cadastrarNovoCliente()" rippleEffect
+                                                            class="btn btn-success"
+                                                                id="basic-addon-search2"><i data-feather="plus"></i></button>
+                                                        </div>
+                                                        <div *ngIf="submitted && f_cobranca.pessoa.errors" class="invalid-feedback">
+                                                            <div *ngIf="f_cobranca.pessoa.errors.required">Informe a pessoa</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <label>Valor Original *</label>
+                                                    <div class="input-group mb-2"
+                                                        [ngClass]="{ 'is-invalid': submitted && f_cobranca.valor_original.errors }">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text">R$</span>
+                                                        </div>
+                                                        <input
+                                                            [ngClass]="{ 'is-invalid': submitted && f_cobranca.valor_original.errors }"
+                                                            currencyMask [formControlName]="'valor_original'"
+                                                            [options]="{ prefix: '', thousands: '.', decimal: ',', align : 'left' }"
+                                                            class="form-control" type="text">
+                                                        <div *ngIf="submitted && f_cobranca.valor_original.errors"
+                                                            class="invalid-feedback">
+                                                            <div *ngIf="f_cobranca.valor_original.errors.required">
+                                                                Preencha o valor</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <label>Valor Com Desconto *</label>
+                                                    <div class="input-group mb-2">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text">R$</span>
+                                                        </div>
+                                                        <input currencyMask [formControlName]="'valor'"
+                                                            [options]="{ prefix: '', thousands: '.', decimal: ',', align : 'left' }"
+                                                            class="form-control" type="text">
+                                                    </div>
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" (change)="onCheck()"
+                                                            class="custom-control-input" id="customCheck1" />
+                                                        <label class="custom-control-label"
+                                                            for="customCheck1">Desconto?</label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label>Data Vencimento *</label>
+                                                    <div class="input-group">
+
+                                                        <input 
+                                                            [ngModelOptions]="{standalone: true}"
+                                                            class="form-control"
+                                                            placeholder="dd-mm-aaaa" name="Basic Date Picker"
+                                                            [(ngModel)]="data_vencimento" ngbDatepicker
+                                                            #basicDP="ngbDatepicker"
+                                                            [ngClass]="{ 'is-invalid': submitted && !data_vencimento }"
+                                                        >
+                                                        <div class="input-group-append">
+                                                            <button
+                                                                class="btn btn-outline-secondary"
+                                                                (click)="basicDP.toggle()" type="button"
+                                                                rippleEffect><i data-feather="calendar"></i>
+                                                            </button>
+                                                        </div>
+
+                                                        <div *ngIf="submitted && !data_vencimento"
+                                                            class="invalid-feedback">
+                                                            <div *ngIf="!data_vencimento">
+                                                                Preencha o data_vencimento</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex justify-content-end">
+                                                <button (click)="verticalWizardNext()" type="button"
+                                                    class="btn btn-primary btn-next" rippleEffect>
+                                                    <span class="align-middle d-sm-inline-block d-none">Próximo</span>
+                                                    <i data-feather="arrow-right"
+                                                        class="align-middle ml-sm-25 ml-0"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <!-- OBSERVAÇÕES, METADADOS -->
+                                        <div id="personal-info-vertical" class="content">
+
+                                            <div class="content-header">
+                                                <h5 class="mb-0">Informações Adicionais<span
+                                                        class="text-secondary">(Opicional)</span></h5>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group col-md-12">
+                                                    <label for="basicTextarea">Observações <app-infos-field mensagem="Informações adicionais referentes ao destinatário"></app-infos-field></label>
+                                                    <fieldset class="form-group">
+                                                        <textarea formControlName="observacao" class="form-control"
+                                                            id="basicTextarea" rows="3"
+                                                            placeholder="Digite as observações aqui..."></textarea>
+                                                    </fieldset>
+                                                </div>
+                                            </div>
+                                            <div class="content-header">
+                                                <h5>Metadados</h5>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group col-md-6">
+                                                    <label class="form-label"
+                                                        for="metadados-descricao">Descrição</label>
+                                                    <input formControlName="metadados_descricao" type="text"
+                                                        id="metadados-descricao" class="form-control" />
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label class="form-label" for="metadados-descricao">Valor</label>
+                                                    <input formControlName="metadados_valor" type="text"
+                                                        id="metadados-descricao" class="form-control" />
+                                                </div>
+                                            </div>
+                                            <div class="d-flex justify-content-between">
+                                                <button (click)="verticalWizardPrevious()" type="button"
+                                                    class="btn btn-outline-secondary btn-next" rippleEffect>
+                                                    <i data-feather="arrow-left" class="align-middle ml-sm-25 ml-0"></i>
+                                                    <span class="align-middle d-sm-inline-block d-none">Voltar</span>
+                                                </button>
+                                                <button (click)="verticalWizardNext()" type="button"
+                                                    class="btn btn-primary btn-prev" rippleEffect>
+                                                    <span class="align-middle d-sm-inline-block d-none">Próximo</span>
+                                                    <i data-feather="arrow-right"
+                                                        class="align-middle mr-sm-25 mr-0"></i>
+                                                </button>
+                                            </div>
+
+                                        </div>
+                                        <!-- RESUMO -->
+                                        <div id="address-step-vertical" class="content">
+                                            <div class="content-header">
+                                                <h5 class="mb-0">Resumo da Cobrança</h5>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="card">
+                                                        <div class="card-body">
+                                                            <hr>
+                                                            <p class="card-text"><strong>Valor: {{ valorFinal |
+                                                                    currency: 'BRL'}}</strong></p>
+                                                            <p class="card-text" mask="00/00/0000">Vencimento:
+                                                                <strong>{{dataVencimentoFinal}}</strong>
+                                                            </p>
+                                                            <p class="card-text">Cliente:
+                                                                <strong
+                                                                    *ngFor="let c of clientesPorEstabelecimentos">{{c.id
+                                                                    == f_cobranca_value.pessoa ? c.nome : ''}}</strong>
+                                                            </p>
+                                                            <p class="card-text">Estabelecimento:
+                                                                <strong
+                                                                    *ngFor="let ec of estabelecimentosPorUsuario">{{ec.id
+                                                                    == f_cobranca_value.estabelecimento ? ec.nome :
+                                                                    ''}}</strong>
+                                                            </p>
+                                                            <hr>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="d-flex justify-content-between">
+                                                <button (click)="verticalWizardPrevious()" type="button"
+                                                    class="btn btn-outline-secondary btn-next" rippleEffect>
+                                                    <i data-feather="arrow-left" class="align-middle ml-sm-25 ml-0"></i>
+                                                    <span class="align-middle d-sm-inline-block d-none">Voltar</span>
+                                                </button>
+                                                <button class="btn btn-success btn-next" rippleEffect>
+                                                    <span class="align-middle d-sm-inline-block d-none">Finalizar</span>
+                                                    <i data-feather="arrow-right"
+                                                        class="align-middle ml-sm-25 ml-0"></i>
+                                                </button>
+                                            </div>
+
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>

@@ -1,0 +1,33 @@
+<div *ngIf="!cadastroPlano && !edicaoPlano" class="content-wrapper container-xxl p-0">
+    <div class="content-body">
+        <section id="home-page">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Planos</h4>
+                            <button (click)="mostrarTelaCadastro()" type="button" class="btn btn-success" rippleEffect>
+                                Novo Plano
+                            </button>
+                        </div>
+                    </div>
+
+                    <div>
+                        <app-table-plano></app-table-plano>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+<app-gerar-plano
+(gerarPlanoEvento)="fecharTelaCadastro()"
+*ngIf="cadastroPlano"
+>
+</app-gerar-plano>
+
+<app-visualizar-editar-plano
+(edicaoPlanoEvento)="fecharTelaEdicao()"
+*ngIf="edicaoPlano"
+></app-visualizar-editar-plano>

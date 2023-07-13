@@ -1,0 +1,86 @@
+<div *ngIf="cobrancasCliente.length > 0" class="row" id="basic-table">
+  <div class="col-12">
+    <div class="card">
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Informações</th>
+              <th>Valor</th>
+              <th>Status</th>
+              <th>Pagar</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let cob of cobrancasCliente">
+              <td>
+                <p><strong>{{cob.estabelecimento_nome}}</strong></p>
+                <span><strong>Vencimento:</strong></span> <span> {{cob.data_vencimento}}</span>
+              </td>
+              <td>
+                <strong>{{cob.valor | currency: 'BRL'}}</strong>
+              </td>
+              <td>
+                <strong class="badge badge-light-{{
+                    cob.status == 'aberto' ? 'warning' :
+                    (cob.status == 'pago') ? 'success' :
+                    (cob.status == 'vencido') ? 'danger' :
+                    (cob.status == 'cancelado') ? 'secondary' :
+                    (cob.status == 'aprovado') ? 'primary' : 'secondary'
+                  }} profile-badge">{{cob.status}}</strong>
+              </td>
+              <td>
+                <button *ngIf="cob.status == 'aberto' || cob.status == 'vencido'" (click)="open(cob)" type="button"
+                  class="btn btn-gradient-success">Pagar</button>
+                <button disabled *ngIf="cob.status == 'pago' || cob.status == 'pendente'"
+                  class="btn btn-outline-secondary">Pagar</button>
+              </td>
+              <td class="overflow-hidden">
+                <div ngbDropdown container="body">
+                  <button type="button" class="btn btn-sm hide-arrow" ngbDropdownToggle data-toggle="dropdown">
+                    <i data-feather="more-vertical"></i>
+                  </button>
+                  <div ngbDropdownMenu>
+                    <!--                     <a *ngIf="cob.status == 'aberto' || cob.status == 'vencido'" ngbDropdownItem (click)="open(cob)">
+                      <i data-feather="credit-card" class="mr-50"></i>
+                      <span>Pagar</span>
+                    </a> -->
+                    <a *ngIf="cob.url_boleto" [href]="cob.url_boleto" target="_blank" ngbDropdownItem>
+                      <i data-feather="printer" class="mr-50"></i>
+                      <span>Imprimir boleto</span>
+                    </a>
+                    <a ngbDropdownItem (click)="openDadosEc(cob)">
+                      <i data-feather="message-circle" class="mr-50"></i>
+                      <span>Contatar Credor</span>
+                    </a>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL DE CONFIRMAÇÃO DA EXCLUSÃO -->
+<div class="modal-primary d-inline-block">
+  <ng-template #modalConfirmarExclusao let-modal>
+    <app-modal-confirmar nomeEntidade="{{nomeEntidadeExclusao}}" (confirmaExclusao)="deletarEntidade()"
+      (dismiss)="modal.dismiss('Cross click')">
+    </app-modal-confirmar>
+  </ng-template>
+</div>
+
+<!-- SEM DADOS PARA MOSTRAR -->
+<div *ngIf="cobrancasCliente.length == 0" class="fieldNoData">
+  <h3 class="mb-3">Nenhum dado para mostrar aqui!</h3>
+  <img src="../../../assets/images/undraw/no_data.svg" width="250" alt="" srcset="">
+</div>
+
+<div class="father-alert mt-5">
+  <app-button-alert class="field-alert" *ngIf="fieldAlert" status="{{status}}" infoAlert="{{message}}">
+  </app-button-alert>
+</div>

@@ -1,0 +1,67 @@
+<!-- <div class="row mb-1 filtro-checkbox">
+
+    <div class="col-md-5">
+        <div class="custom-control custom-radio">
+            <input checked type="radio" (change)="onCheckFiltroPersonalizado()" id="customRadio1" name="customRadio" class="custom-control-input" checked />
+            <label class="custom-control-label" for="customRadio1">Filtro Personalizado</label>
+        </div>
+    </div>
+    <div class="col-md-7">
+        <div class="custom-control custom-radio">
+            <input type="radio" (change)="onCheckFiltroPreDefinido()" id="customRadio2" name="customRadio" class="custom-control-input" />
+            <label class="custom-control-label" for="customRadio2">Filtro Pré-definido</label>
+        </div>
+    </div>
+</div> -->
+<div class="row">
+    <div class="col-md-5 d-flex align-items-center">
+        <span class="mr-1">de:</span>
+
+        <div class="input-group">
+            <input (dateSelect)="aplicarFiltroPersonalizado()" class="checkbox-input form-control" placeholder="dd-mm-aaaa"
+                name="Basic Date Picker" [(ngModel)]="data_vencimento_from" ngbDatepicker #dateFrom="ngbDatepicker">
+            <div class="input-group-append">
+                <button class="checkbox-input btn btn-outline-secondary" (click)="dateFrom.toggle()" type="button"
+                    rippleEffect><i data-feather="calendar"></i>
+                </button>
+            </div>
+        </div>
+
+        <span class="mr-1 ml-1">até:</span>
+
+        <div class="input-group">
+            <input (dateSelect)="aplicarFiltroPersonalizado()" class="checkbox-input form-control" placeholder="dd-mm-aaaa"
+                name="Basic Date Picker" [(ngModel)]="data_vencimento_to" ngbDatepicker #dateTo="ngbDatepicker">
+            <div class="input-group-append">
+                <button class="checkbox-input btn btn-outline-secondary" (click)="dateTo.toggle()" type="button"
+                    rippleEffect><i data-feather="calendar"></i>
+                </button>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-md-7 filtro-btn">
+        <div class="btn-group d-flex justify-content-center" role="group" aria-label="Basic example">
+            <button #btn1 (click)="selectFiltro('btn1', 0, true)" type="button" class="btn-filtro-pre-definido btn btn-outline-secondary"
+                rippleEffect>
+                mês atual</button>
+            <button #btn2 (click)="selectFiltro('btn2', 0, false)" type="button"
+                class="btn-filtro-pre-definido btn btn-primary" rippleEffect>
+                hoje</button>
+            <button #btn3 (click)="selectFiltro('btn3', 7, false)" type="button"
+                class="btn-filtro-pre-definido btn btn-outline-secondary" rippleEffect>
+                7 dias
+            </button>
+            <button #btn4 (click)="selectFiltro('btn4', 30, false)" type="button"
+                class="btn-filtro-pre-definido btn btn-outline-secondary" rippleEffect>
+                30 dias
+            </button>
+            <button #btn5 (click)="selectFiltro('btn5', 91, false)" type="button"
+                class="btn-filtro-pre-definido btn btn-outline-secondary" rippleEffect>
+                3 meses
+            </button>
+        </div>
+    </div>
+</div>
+
+<app-chart-dash #chartDashComponent class="d-none"></app-chart-dash>

@@ -1,0 +1,63 @@
+<div *ngIf="dadosEcsOuClientes.length > 0" class="row" id="basic-table">
+  <div class="col-12">
+    <div class="card">
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Documento</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let linha of dadosEcsOuClientes">
+              <td>
+                <strong>{{linha.nome}}</strong>
+              </td>
+              <td *ngIf="linha.documento.length == 11">
+                <strong>{{linha.documento | cpf}}</strong>
+              </td>
+              <td *ngIf="linha.documento.length == 14">
+                <strong>{{linha.documento | cnpj}}</strong>
+              </td>
+              <td class="overflow-hidden">
+                <div ngbDropdown container="body">
+                  <button type="button" class="btn btn-sm hide-arrow" ngbDropdownToggle data-toggle="dropdown">
+                    <i data-feather="more-vertical"></i>
+                  </button>
+                  <div ngbDropdownMenu>
+                    <a ngbDropdownItem (click)="abrirTelaVisualizacao(linha)">
+                      <i data-feather="edit" class="mr-50"></i>
+                      <span>Visualizar/Editar</span>
+                    </a>
+                    <a ngbDropdownItem (click)="abrirModalDelete(modalConfirmarExclusao, linha.id, linha.nome, linha.documento)">
+                      <i data-feather="delete" class="mr-50"></i>
+                      <span>Desativar</span>
+                    </a>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL DE CONFIRMAÇÃO DA EXCLUSÃO -->
+<div class="modal-primary d-inline-block">
+  <ng-template #modalConfirmarExclusao let-modal>
+    <app-modal-confirmar nomeEntidade="{{nomeEntidadeExclusao}}" (confirmaExclusao)="deletarEntidade()"
+      (dismiss)="modal.dismiss('Cross click')">
+    </app-modal-confirmar>
+  </ng-template>
+</div>
+
+
+<!-- SEM DADOS PARA MOSTRAR -->
+<div *ngIf="dadosEcsOuClientes.length == 0" class="fieldNoData">
+  <h3 class="mb-3">Nenhum dado para mostrar aqui!</h3>
+  <img src="../../../assets/images/undraw/no_data.svg" width="250" alt="" srcset="">
+</div>

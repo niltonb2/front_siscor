@@ -1,0 +1,34 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="myModalLabel1">Produtos/Serviços</h4>
+    <button type="button" class="close" (click)="dismissModal()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Descrição</th>
+                <th>Valor</th>
+                <th>Tipo</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let p of dadosProdutos">
+                <td>
+                    <strong>{{p.descricao}}</strong>
+                </td>
+                <td>
+                    <strong>{{p.valor | currency: 'BRL'}}</strong>
+                </td>
+                <td>
+                    <div class="badge badge-light-{{
+                                        p.tipo == 1 ? 'secondary' : 'primary'
+                                    }}">
+                        {{p.tipo == 1 ? 'produto' : 'serviço'}}
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

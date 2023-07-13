@@ -1,0 +1,65 @@
+<div *ngIf="dadosCobranca.length > 0" class="row" id="basic-table">
+  <div class="col-12">
+    <div class="card">
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Vencimento</th>
+              <th>Status</th>
+              <th>Cliente</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let cob of dadosCobranca">
+              <td>
+                <strong>{{cob.data_vencimento | date}}</strong>
+              </td>
+              <td>
+                <div class="badge badge-light-{{
+                    cob.status == 'aberto' ? 'warning' :
+                    (cob.status == 'pago') ? 'success' :
+                    (cob.status == 'vencido') ? 'danger' :
+                    (cob.status == 'cancelado') ? 'secondary' :
+                    (cob.status == 'aprovado') ? 'primary' : 'secondary'
+                  }} profile-badge">{{cob.status}}</div>
+              </td>
+              <td>
+                <strong>{{cob.nome}}</strong>
+              </td>
+              <td class="overflow-hidden">
+                <div ngbDropdown container="body">
+                  <button type="button" class="btn btn-sm hide-arrow" ngbDropdownToggle data-toggle="dropdown">
+                    <i data-feather="more-vertical"></i>
+                  </button>
+                  <div ngbDropdownMenu>
+                    <a ngbDropdownItem (click)="open(cob)">
+                      <i data-feather="eye" class="mr-50"></i>
+                      <span>Visualizar</span>
+                    </a>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL DE CONFIRMAÇÃO DA EXCLUSÃO -->
+<div class="modal-primary d-inline-block">
+  <ng-template #modalConfirmarExclusao let-modal>
+    <app-modal-confirmar nomeEntidade="{{nomeEntidadeExclusao}}" (confirmaExclusao)="deletarEntidade()"
+      (dismiss)="modal.dismiss('Cross click')">
+    </app-modal-confirmar>
+  </ng-template>
+</div>
+
+<!-- SEM DADOS PARA MOSTRAR -->
+<div *ngIf="dadosCobranca.length == 0" class="fieldNoData">
+  <h3 class="mb-3">Nenhum dado para mostrar aqui!</h3>
+  <img src="../../../assets/images/undraw/no_data.svg" width="150" alt="" srcset="">
+</div>

@@ -1,0 +1,21 @@
+<div class="content-wrapper container-xxl p-0">
+    <div class="content-body">
+        <section id="home-page">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">{{nomeEntidade}}</h4>
+                            <button (click)="abrirTelaCadastro()" type="button" class="btn btn-{{corBotao}}"
+                                rippleEffect>
+                                {{nomeBotao}}
+                            </button>
+                        </div>
+                        <!-- LISTAGEM -->
+                    </div>
+                    <app-table-principal #tablePrincipal></app-table-principal>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>

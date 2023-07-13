@@ -1,0 +1,85 @@
+<div class="content-wrapper container-xxl p-0">
+    <div class="content-body">
+        <section id="home-page">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Visualização de Produto</h4>
+                            <button (click)="fecharTelaEdicaoProduto()" type="button" class="btn btn-secondary"
+                                rippleEffect>
+                                <i data-feather="x" class="font-medium-3"></i>
+                            </button>
+                        </div>
+
+                        <div class="card-body">
+
+                            <form class="form" [formGroup]="formularioProduto" (ngSubmit)="editarProduto()">
+                                <h5>Contato</h5>
+                                <div class="row">
+                                    <div class="col-md-2 col-12">
+                                        <div class="form-group">
+                                            <label for="first-name-column">Tipo *</label>
+                                            <ng-select formControlName="tipo"
+                                                [ngClass]="{ 'is-invalid': submitted && f_produto.tipo.errors }">
+                                                <ng-option [value]="1">produto</ng-option>
+                                                <ng-option [value]="2">serviço</ng-option>
+                                            </ng-select>
+                                            <div *ngIf="submitted && f_produto.tipo.errors" class="invalid-feedback">
+                                                <div *ngIf="f_produto.tipo.errors.required">Preencha o tipo</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 col-12">
+                                        <div class="form-group">
+                                            <label for="last-name-column">Valor *</label>
+
+
+
+                                            <div class="input-group mb-2"
+                                                [ngClass]="{ 'is-invalid': submitted && f_produto.valor.errors }">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">R$</span>
+                                                </div>
+                                                <input
+                                                    [ngClass]="{ 'is-invalid': submitted && f_produto.valor.errors }"
+                                                    currencyMask [formControlName]="'valor'"
+                                                    [options]="{ prefix: '', thousands: '.', decimal: ',', align : 'left' }"
+                                                    class="form-control" type="text">
+                                                <div *ngIf="submitted && f_produto.valor.errors"
+                                                    class="invalid-feedback">
+                                                    <div *ngIf="f_produto.valor.errors.required">
+                                                        Preencha o valor</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8 col-12">
+                                        <div class="form-group">
+                                            <label for="last-name-column">Descrição *</label>
+                                            <input formControlName="descricao" type="email" id="last-name-column"
+                                                class="form-control" placeholder="Descrição do produto ou serviço"
+                                                [ngClass]="{ 'is-invalid': submitted && f_produto.descricao.errors }" />
+                                            <div *ngIf="submitted && f_produto.descricao.errors"
+                                                class="invalid-feedback">
+                                                <div *ngIf="f_produto.descricao.errors.required">Preencha a descrição
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 d-flex justify-content-end">
+                                        <button type="submit" rippleEffect class="btn btn-success mr-1">Salvar</button>
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>

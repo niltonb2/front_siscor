@@ -1,0 +1,27 @@
+.menuPortal {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    font-size: 1.1rem;
+    background-color: hsl(207, 97%, 60%);
+    color: white;
+    margin: 1rem;
+    padding: .7rem;
+    border-radius: 3%;
+    width: 15vw;
+    box-shadow: 1px 1px 5px 5px hsla(207, 97%, 60%, 0.356);
+}
+
+.menuPortalPai {
+    //border: 1px solid red;
+}
+
+.menuPortalItens {
+    padding: .9rem;
+}
+
+@media (max-width: 576px) { 
+    .menuPortal {
+        width: 55vw !important;
+    }
+ }

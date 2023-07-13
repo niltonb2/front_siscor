@@ -1,0 +1,9 @@
+<div class="row d-flex justify-content-center">
+    <div class="form-group col-md-6">
+    <form [formGroup]="selectEstabelecimento" (ngSubmit)="selecionar()">
+            <ng-select class="select-ec" formControlName="estabelecimento" (change)="selecionar()">
+                <ng-option *ngFor="let ec of estabelecimentosPorUsuario" value="{{ec.id}}_{{ec.nome}}"> {{ec.nome}} </ng-option>
+            </ng-select>
+        </form>
+    </div>
+</div>

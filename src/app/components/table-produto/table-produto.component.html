@@ -1,0 +1,68 @@
+<div *ngIf="dadosProduto.length > 0" class="row" id="basic-table">
+    <div class="col-12">
+        <div class="card">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Descrição</th>
+                            <th>Valor</th>
+                            <th>Tipo</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let p of dadosProduto">
+                            <td>
+                                <strong>{{p.descricao}}</strong>
+                            </td>
+                            <td>
+                                <strong>{{p.valor | currency: 'BRL'}}</strong>
+                            </td>
+                            <td>
+                                <div class="badge badge-light-{{
+                                    p.tipo == 1 ? 'secondary' : 'primary'
+                                }}">
+                                    {{p.tipo == 1 ? 'produto' : 'serviço'}}
+                                </div>
+                            </td>
+                            <td class="overflow-hidden">
+                                <div ngbDropdown container="body">
+                                    <button type="button" class="btn btn-sm hide-arrow" ngbDropdownToggle
+                                        data-toggle="dropdown">
+                                        <i data-feather="more-vertical"></i>
+                                    </button>
+                                    <div ngbDropdownMenu>
+                                        <a (click)="mostrarTelaEditar(p)" ngbDropdownItem>
+                                            <i data-feather="edit" class="mr-50"></i>
+                                            <span>Editar</span>
+                                        </a>
+                                        <a (click)="verificarProdutoPlano(modalConfirmarExclusao, p)" ngbDropdownItem>
+                                            <i data-feather="delete" class="mr-50"></i>
+                                            <span>Desativar</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL DE CONFIRMAÇÃO DA EXCLUSÃO -->
+<div class="modal-primary d-inline-block">
+    <ng-template #modalConfirmarExclusao let-modal>
+        <app-modal-confirmar nomeEntidade="{{nomeEntidadeExclusao}}" (confirmaExclusao)="desativarProduto()"
+            (dismiss)="modal.dismiss('Cross click')">
+        </app-modal-confirmar>
+    </ng-template>
+</div>
+
+<!-- SEM DADOS PARA MOSTRAR -->
+<div *ngIf="dadosProduto.length == 0" class="fieldNoData">
+    <h3 class="mb-3">Nenhum dado para mostrar aqui!</h3>
+    <img src="../../../assets/images/undraw/no_data.svg" width="150" alt="" srcset="">
+</div>

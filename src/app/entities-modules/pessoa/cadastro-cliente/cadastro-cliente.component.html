@@ -1,0 +1,238 @@
+<div class="content-wrapper container-xxl p-0">
+  <div class="content-body">
+    <section id="home-page">
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h4 class="card-title">Cadastro de Cliente</h4>
+              <button (click)="fecharTelaCadastroCliente()" type="button" class="btn btn-secondary" rippleEffect>
+                <i data-feather="x" class="font-medium-3"></i>
+              </button>
+            </div>
+            <section class="modern-horizontal-wizard">
+              <div id="stepper3" class="bs-stepper wizard-modern modern-wizard-example">
+                <!-- HEADER -->
+                <div class="bs-stepper-header header-cadastro-cliente">
+                  <div class="step" data-target="#cliente-dados">
+                    <button type="button" class="step-trigger">
+                      <span class="bs-stepper-box">
+                        <i data-feather="user" class="font-medium-3"></i>
+                      </span>
+                      <span class="bs-stepper-label">
+                        <span class="bs-stepper-title">Cliente</span>
+                        <span class="bs-stepper-subtitle">Nome e Documento</span>
+                      </span>
+                    </button>
+                  </div>
+                  <div class="line">
+                    <i data-feather="chevron-right" class="font-medium-2"></i>
+                  </div>
+                  <div class="step" data-target="#cliente-contato">
+                    <button type="button" class="step-trigger">
+                      <span class="bs-stepper-box">
+                        <i data-feather="phone" class="font-medium-3"></i>
+                      </span>
+                      <span class="bs-stepper-label">
+                        <span class="bs-stepper-title">Contato</span>
+                        <span class="bs-stepper-subtitle">Telefone, email</span>
+                      </span>
+                    </button>
+                  </div>
+                  <div class="line">
+                    <i data-feather="chevron-right" class="font-medium-2"></i>
+                  </div>
+                  <div class="step" data-target="#cliente-endereco">
+                    <button type="button" class="step-trigger">
+                      <span class="bs-stepper-box">
+                        <i data-feather="map-pin" class="font-medium-3"></i>
+                      </span>
+                      <span class="bs-stepper-label">
+                        <span class="bs-stepper-title">Endereço</span>
+                        <span class="bs-stepper-subtitle">Cidade, Bairro</span>
+                      </span>
+                    </button>
+                  </div>
+                </div>
+                <!-- BODY -->
+                <div class="bs-stepper-content body-cadastro-cliente">
+                  <!-- FORMULÁRIO DADOS CLIENTE -->
+                  <div id="cliente-dados" class="content">
+                    <form [formGroup]="formularioCliente" (ngSubmit)="cadastroPessoa()">
+                      <div class="row">
+                        <div class="form-group col-md-6">
+                          <label class="form-label" for="modern-username">Nome *</label>
+                          <input formControlName="nome" type="text" id="modern-username" class="form-control"
+                            placeholder="Nome Cliente"
+                            [ngClass]="{ 'is-invalid': submitted && f_cliente.nome.errors }" />
+                          <div *ngIf="submitted && f_cliente.nome.errors" class="invalid-feedback">
+                            <div *ngIf="f_cliente.nome.errors.required">Preencha o nome</div>
+                          </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label class="form-label" for="modern-documento">Documento *</label>
+                          <input formControlName="documento" mask="CPF_CNPJ" type="text" id="modern-documento"
+                            class="form-control" placeholder="CPF/CNPJ"
+                            [ngClass]="{ 'is-invalid': submitted && f_cliente.documento.errors }" />
+                          <div *ngIf="submitted && f_cliente.documento.errors" class="invalid-feedback">
+                            <div *ngIf="f_cliente.documento.errors.required">Preencha o documento</div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="d-flex justify-content-end">
+                        <button class="btn btn-success btn-next ml-1" rippleEffect (click)="nextToSubmit(true)"
+                          ngbTooltip="Preencheer os dados de contato" placement="left">
+                          <span class="align-middle d-sm-inline-block d-none">Cadastrar</span>
+                          <i data-feather="arrow-right" class="align-middle ml-sm-25 ml-0"></i>
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                  <!-- FORMULAŔIO DADOS CONTATO -->
+                  <div id="cliente-contato" class="content">
+                    <form [formGroup]="formularioContato" (ngSubmit)="cadastroContato()">
+                      <div class="row d-flex justify-content-between">
+                        <div class="form-group col-md-4">
+                          <label class="form-label" for="modern-telefone">Telefone</label>
+                          <input formControlName="telefone" mask="(00) 0000-0000" type="text" id="modern-telefone"
+                            class="form-control" placeholder="DDD + Telefone" />
+                        </div>
+                        <div class="form-group col-md-4">
+                          <label class="form-label" for="modern-celular">Celular *</label>
+                          <input formControlName="celular" mask="(00) 0 0000-0000" type="text" id="modern-celular"
+                            class="form-control" placeholder="DDD + Celular"
+                            [ngClass]="{ 'is-invalid': submitted && f_contato.celular.errors }" />
+                          <div *ngIf="submitted && f_contato.celular.errors" class="invalid-feedback">
+                            <div *ngIf="f_contato.celular.errors.required">Preencha o celular</div>
+                          </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                          <label class="form-label" for="modern-email">Email *</label>
+                          <input formControlName="email" type="text" id="modern-email" class="form-control"
+                            placeholder="email@email.com"
+                            [ngClass]="{ 'is-invalid': submitted && f_contato.email.errors }" />
+                          <div *ngIf="submitted && f_contato.email.errors" class="invalid-feedback">
+                            <div *ngIf="f_contato.email.errors.required">Preencha o e-mail</div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="d-flex justify-content-between">
+                        <a class="btn btn-primary btn-prev" (click)="modernHorizontalPrevious()" rippleEffect>
+                          <i data-feather="arrow-left" class="align-middle mr-sm-25 mr-0"></i>
+                          <span class="align-middle d-sm-inline-block d-none">Voltar</span>
+                        </a>
+                        <div>
+                          <button class="btn btn-success btn-next" rippleEffect (click)="nextToSubmit(false)"
+                            ngbTooltip="Preencher dados de endereço" placement="left">
+                            <span class="align-middle d-sm-inline-block d-none">Cadastrar</span>
+                            <i data-feather="check" class="align-middle ml-sm-25 ml-0"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                  <!-- FORMULAŔIO DADOS ENDEREÇO -->
+                  <div id="cliente-endereco" class="content">
+                    <form [formGroup]="formularioEndereco" (ngSubmit)="cadastroEndereco()">
+                      <div class="row">
+                        <div class="form-group col-md-2">
+                          <label class="form-label" for="modern-cep">CEP</label>
+                          <div class="input-group input-group-merge"
+                            [ngClass]="{ 'is-invalid': submitted && f_endereco.cep.errors }">
+                            <input formControlName="cep" mask="00000-000" type="text" id="modern-cep"
+                              class="form-control" placeholder="00000-000"
+                              [ngClass]="{ 'is-invalid': submitted && f_endereco.cep.errors }" />
+                            <div class="input-group-append">
+                              <a (click)="consultaCep()" class="input-group-text" id="basic-addon-search2"><i
+                                  data-feather="search"></i></a>
+                            </div>
+                          </div>
+                          <div *ngIf="submitted && f_endereco.cep.errors" class="invalid-feedback">
+                            <div *ngIf="f_endereco.cep.errors.required">Preencha o cep</div>
+                          </div>
+                        </div>
+                        <div class="form-group col-md-10">
+                          <label class="form-label" for="modern-logradouro">Endereço</label>
+                          <input [ngModelOptions]="{standalone: true}" [(ngModel)]="logradouro" type="text"
+                            id="modern-logradouro" class="form-control" placeholder="Avenida 0 Rua 0"
+                            [ngClass]="{ 'is-invalid': submitted && !logradouro }" />
+                          <div *ngIf="submitted && !logradouro" class="invalid-feedback">
+                            <div *ngIf="!logradouro">Preencha o logradouro</div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="form-group col-md-2">
+                          <label class="form-label" for="modern-numero">Número</label>
+                          <input formControlName="numero" type="text" id="modern-numero" class="form-control"
+                            placeholder="00" />
+                        </div>
+                        <div class="form-group col-md-5">
+                          <label class="form-label" for="city3">Complemento</label>
+                          <input formControlName="complemento" type="text" id="city3" class="form-control"
+                            placeholder="Bloco A" />
+                        </div>
+                        <div class="form-group col-md-5">
+                          <label class="form-label" for="modern-bairro">Bairro</label>
+                          <input [ngModelOptions]="{standalone: true}" [(ngModel)]="bairro" type="text"
+                            id="modern-bairro" class="form-control" placeholder="Centro"
+                            [ngClass]="{ 'is-invalid': submitted && !bairro }" />
+                          <div *ngIf="submitted && !bairro" class="invalid-feedback">
+                            <div *ngIf="!bairro">Preencha o bairro</div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="form-group col-md-2">
+                          <label class="form-label" for="modern-uf">UF</label>
+                          <input [ngModelOptions]="{standalone: true}" [(ngModel)]="uf" mask="AA" type="text"
+                            id="modern-uf" class="form-control" placeholder="DF"
+                            [ngClass]="{ 'is-invalid': submitted && !uf }" />
+                          <div *ngIf="submitted && !uf" class="invalid-feedback">
+                            <div *ngIf="!uf">Preencha o uf</div>
+                          </div>
+                        </div>
+                        <div class="form-group col-md-5">
+                          <label class="form-label" for="modern-cidade">Cidade</label>
+                          <input [ngModelOptions]="{standalone: true}" [(ngModel)]="cidade" type="text"
+                            id="modern-cidade" class="form-control" placeholder="Brasília"
+                            [ngClass]="{ 'is-invalid': submitted && !cidade }" />
+                          <div *ngIf="submitted && !cidade" class="invalid-feedback">
+                            <div *ngIf="!cidade">Preencha o uf</div>
+                          </div>
+                        </div>
+                        <div class="form-group col-md-5">
+                          <label class="form-label" for="modern-estado">Estado</label>
+                          <input formControlName="estado" type="text" id="modern-estado" class="form-control"
+                            placeholder="Distrito Federal"
+                            [ngClass]="{ 'is-invalid': submitted && f_endereco.estado.errors }" />
+                          <div *ngIf="submitted && f_endereco.estado.errors" class="invalid-feedback">
+                            <div *ngIf="f_endereco.estado.errors.required">Preencha o estado</div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="d-flex justify-content-between">
+                        <a class="btn btn-primary btn-prev" (click)="modernHorizontalPrevious()" rippleEffect>
+                          <i data-feather="arrow-left" class="align-middle mr-sm-25 mr-0"></i>
+                          <span class="align-middle d-sm-inline-block d-none">Voltar</span>
+                        </a>
+                        <div>
+                          <button class="btn btn-success btn-next" rippleEffect (click)="nextToSubmit(false)"
+                            ngbTooltip="Finalizar o cadastro" placement="left">
+                            <span class="align-middle d-sm-inline-block d-none">Cadastrar</span>
+                            <i data-feather="check" class="align-middle ml-sm-25 ml-0"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

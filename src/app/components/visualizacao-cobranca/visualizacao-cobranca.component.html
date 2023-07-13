@@ -1,0 +1,32 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="myModalLabel1">Dados da Cobrança</h4>
+    <button type="button" class="close" (click)="dismissModal()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="card-body">
+    <h3>{{dadosDaCobranca.nome}}</h3>
+    <h6 class="text-muted">Status</h6>
+    <div class="badge badge-light-{{
+        dadosDaCobranca.status == 'aberto' ? 'warning' :
+        (dadosDaCobranca.status == 'pago') ? 'success' :
+        (dadosDaCobranca.status == 'vencido') ? 'danger' :
+        (dadosDaCobranca.status == 'cancelado') ? 'secondary' :
+        (dadosDaCobranca.status == 'aprovado') ? 'primary' : 'secondary'
+      }} profile-badge">{{dadosDaCobranca.status}}</div>
+    <hr class="mb-2" />
+    <div class="d-flex justify-content-between align-items-center">
+        <div>
+            <h6 class="text-muted font-weight-bolder">Valor</h6>
+            <h3 class="mb-0">{{dadosDaCobranca.valor | currency: 'BRL'}}</h3>
+        </div>
+        <div>
+            <h6 class="text-muted font-weight-bolder">Vencimento</h6>
+            <h3 class="mb-0">{{dadosDaCobranca.data_vencimento}}</h3>
+        </div>
+        <div>
+            <a *ngIf="dadosDaCobranca.url_boleto" [href]="dadosDaCobranca.url_boleto" target="_blank" class="btn btn-icon btn-lg rounded-circle btn-flat-secondary" rippleEffect placement="top" ngbTooltip="Imprimir boleto">
+                <span [data-feather]="'printer'"></span></a>
+        </div>
+    </div>
+</div>

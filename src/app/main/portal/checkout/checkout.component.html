@@ -1,0 +1,274 @@
+<div class="modal-header">
+    <h5 class="modal-title" id="myModalLabel160">Pagamento</h5>
+    <button type="button" class="close" (click)="dismissModal()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<section class="vertical-wizard">
+    <div id="cadastroEstabelecimento" class="bs-stepper vertical vertical-wizard-example body-cadastro-estabelecimento">
+        <!-- HEADER -->
+        <div class="bs-stepper-header header-cadastro-estabelecimento">
+            <div class="step" data-target="#account-details-vertical">
+                <button type="button" class="step-trigger">
+                    <span class="bs-stepper-box">1</span>
+                    <span class="bs-stepper-label">
+                        <span class="bs-stepper-title d-lg-inline-block d-none">Dados</span>
+                    </span>
+                </button>
+            </div>
+            <div class="step" data-target="#personal-info-vertical">
+                <button type="button" class="step-trigger">
+                    <span class="bs-stepper-box">2</span>
+                    <span class="bs-stepper-label">
+                        <span class="bs-stepper-title d-lg-inline-block d-none">Endereço</span>
+                    </span>
+                </button>
+            </div>
+            <div class="step" data-target="#address-step-vertical">
+                <button type="button" class="step-trigger">
+                    <span class="bs-stepper-box">3</span>
+                    <span class="bs-stepper-label">
+                        <span class="bs-stepper-title d-lg-inline-block d-none">Pagamento</span>
+                    </span>
+                </button>
+            </div>
+        </div>
+        <!-- BODY -->
+        <div class="bs-stepper-content">
+            <!-- DADOS -->
+            <form [formGroup]="formularioCheckout" (ngSubmit)="pagar()">
+                <div id="account-details-vertical" class="content">
+                    <div class="content-header">
+                        <h5 class="mb-0">Dados Pessoais</h5>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <div>
+                                <label class="form-label" for="documento-field">Documento *</label>
+                                <input disabled formControlName="documento" mask="CPF_CNPJ" type="text" id="documento-field"
+                                    class="form-control" placeholder="CPF/CNPJ" />
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <div>
+                                <label class="form-label" for="vertical-username">Nome *</label>
+                                <input disabled formControlName="nome" type="text" id="vertical-username"
+                                    placeholder="Nome Fantasia" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="form-label" for="vertical-last-name">Celular *</label>
+                            <input formControlName="celular" mask="(00) 0 0000-0000" type="text" id="vertical-last-name"
+                                class="form-control" placeholder="DDD + Celular" />
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="form-label" for="vertical-last-name">E-mail *</label>
+                            <input formControlName="email" type="text" id="vertical-last-name" class="form-control"
+                                placeholder="email@email.com" />
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <button (click)="verticalWizardNext()" type="button" class="btn btn-primary btn-prev"
+                            rippleEffect>
+                            <span class="align-middle">Próximo</span>
+                        </button>
+                    </div>
+                </div>
+                <!-- ENDEREÇO -->
+                <div id="personal-info-vertical" class="content">
+                    <div class="content-header">
+                        <h5 class="mb-0">Dados de Endereço</h5>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-3">
+                            <label class="form-label" for="modern-cep">CEP *</label>
+                            <input formControlName="cep" mask="00000-000" type="text" id="modern-cep"
+                                class="form-control" placeholder="00000-000" />
+                            <div class="invalid-feedback">
+                                <div>Preencha o cep</div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-9">
+                            <label class="form-label" for="modern-logradouro">Endereço *</label>
+                            <input formControlName="logradouro" type="text" id="modern-logradouro" class="form-control"
+                                placeholder="Avenida 0 Rua 0" />
+                            <div class="invalid-feedback">
+                                <div>Preencha o logradouro</div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label class="form-label" for="modern-numero">Número</label>
+                            <input formControlName="numero" type="text" id="modern-numero" class="form-control"
+                                placeholder="00" />
+                        </div>
+                        <div class="form-group col-md-9">
+                            <label class="form-label" for="modern-bairro">Bairro *</label>
+                            <input formControlName="bairro" type="text" id="modern-bairro" class="form-control"
+                                placeholder="Centro" />
+                            <div class="invalid-feedback">
+                                <div>Preencha o bairro</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-3">
+                            <label class="form-label" for="modern-uf">UF *</label>
+                            <ng-select formControlName="uf">
+                                <ng-option *ngFor="let uf of ufs" [value]="uf">
+                                    {{uf}} </ng-option>
+                            </ng-select>
+                            <div class="invalid-feedback">
+                                <div>Preencha o uf</div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label class="form-label" for="modern-cidade">Cidade *</label>
+                            <input formControlName="cidade" type="text" id="modern-cidade" class="form-control"
+                                placeholder="Brasília" />
+                            <div class="invalid-feedback">
+                                <div>Preencha o uf</div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-5">
+                            <label class="form-label" for="city3">Complemento</label>
+                            <input formControlName="complemento" type="text" id="city3" class="form-control"
+                                placeholder="Bloco A" />
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <div class="d-flex justify-content-end">
+                            <button (click)="verticalWizardPrevious()" type="button"
+                                class="btn btn-outline-secondary btn-prev" rippleEffect>
+                                <span class="align-middle">Voltar</span>
+                            </button>
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <button (click)="verticalWizardNext()" type="button" class="btn btn-primary btn-prev"
+                                rippleEffect>
+                                <span class="align-middle">Próximo</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- PAGAMENTO -->
+                <div id="address-step-vertical" class="content">
+                    <div class="content-header mb-2">
+                        <h5 class="mb-0">Forma de Pagamento</h5>
+                    </div>
+                    <div class="row">
+                        <div *ngIf="dadosDaCobranca.pagamento_cartao" class="form-group col-md-3">
+                            <button (click)="selecaoPagamento('cartao')" type="button"
+                                class="btn btn-block {{pagamentoSelecionado == 'cartao' ? 'btn-primary' : 'btn-outline-primary'}}"
+                                rippleEffect>CARTÃO</button>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <button (click)="selecaoPagamento('boleto')" type="button"
+                                class="btn btn-block {{pagamentoSelecionado == 'boleto' ? 'btn-primary' : 'btn-outline-primary'}}"
+                                rippleEffect>BOLETO</button>
+                        </div>
+                        <div *ngIf="dadosDaCobranca.pagamento_cartao" class="col-md-2 d-flex justify-content-center align-items-center">
+                            <p class="form-label">Pagar em:</p>
+                        </div>
+                        <div *ngIf="dadosDaCobranca.pagamento_cartao" class="form-group col-md-4">
+                            <ng-select formControlName="pagar_em" id="modern-estado">
+                                <ng-option *ngFor="let parcela of parcelamento" [value]="parcela">
+                                    {{parcela.quantidade}}x de {{parcela.valor | currency: 'BRL'}}</ng-option>
+                            </ng-select>
+                        </div>
+                    </div>
+                    <div *ngIf="pagamentoSelecionado == 'cartao' && dadosDaCobranca.pagamento_cartao">
+                        <div class="content-header mb-2">
+                            <h5>Dados do Cartão</h5>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-10">
+                                <label class="form-label" for="modern-numero">Número</label>
+                                <input (input)="getCreditCardType($event.target.value)" formControlName="numero_cartao"
+                                    mask="0000 0000 0000 0000" type="text" id="modern-numero" class="form-control"
+                                    placeholder="**** **** **** ****"
+                                    [ngClass]="{ 'is-invalid': submitted && f_checkout.numero_cartao.errors }" />
+                                <div *ngIf="submitted && f_checkout.numero_cartao.errors" class="invalid-feedback">
+                                    <div *ngIf="f_checkout.numero_cartao.errors.required">Preencha o número do cartão
+                                    </div>
+                                </div>
+                                <div *ngIf="submitted && f_checkout.numero_cartao.errors" class="invalid-feedback">
+                                    <div *ngIf="f_checkout.numero_cartao.errors.minlength">Preencha os 16 números do
+                                        cartão
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label class="form-label" for="bandeira">Bandeira</label>
+                                <div class="bandeira-card row d-flex justify-content-center">
+                                    <img id="bandeira" *ngIf="bandeira == null || undefined" width="40px"
+                                        class="btn-bandeira" src="assets/images/checkout/bandeiras/default.png" />
+                                    <img id="bandeira" *ngIf="bandeira == 'MASTER_CARD'" width="35px"
+                                        class="btn-bandeira" src="assets/images/checkout/bandeiras/mastercard.png" />
+                                    <img id="bandeira" *ngIf="bandeira == 'ELO'" width="35px" class="btn-bandeira"
+                                        src="assets/images/checkout/bandeiras/elo.png" />
+                                    <img id="bandeira" *ngIf="bandeira == 'HIPERCARD'" width="35px" class="btn-bandeira"
+                                        src="assets/images/checkout/bandeiras/hipercard.png" />
+                                    <img id="bandeira" *ngIf="bandeira == 'VISA'" width="35px" class="btn-bandeira"
+                                        src="assets/images/checkout/bandeiras/visa.png" />
+                                    <img id="bandeira" *ngIf="bandeira == 'DINERS_CLUB'" width="35px"
+                                        class="btn-bandeira" src="assets/images/checkout/bandeiras/diners-club.png" />
+                                    <img id="bandeira" *ngIf="bandeira == 'AMERICAN_EXPRESS'" width="35px"
+                                        class="btn-bandeira"
+                                        src="assets/images/checkout/bandeiras/american-express.png" />
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label class="form-label" for="city3">Nome (igual no cartão)</label>
+                                <input formControlName="nome_cartao" type="text" id="city3" class="form-control"
+                                    [ngClass]="{ 'is-invalid': submitted && f_checkout.nome_cartao.errors }" />
+                                <div *ngIf="submitted && f_checkout.nome_cartao.errors" class="invalid-feedback">
+                                    <div *ngIf="f_checkout.nome_cartao.errors.required">Preencha o nome do cartão</div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="form-label" for="city3">Validade</label>
+                                <input formControlName="vencimento_cartao" mask="00/00" type="text" id="city3"
+                                    class="form-control" placeholder="00/00"
+                                    [ngClass]="{ 'is-invalid': submitted && f_checkout.vencimento_cartao.errors }" />
+                                <div *ngIf="submitted && f_checkout.vencimento_cartao.errors" class="invalid-feedback">
+                                    <div *ngIf="f_checkout.vencimento_cartao.errors.required">Preencha o vencimento do
+                                        cartão</div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="form-label" for="city3">CVV</label>
+                                <input formControlName="cvv_cartao" mask="000" type="text" id="city3"
+                                    class="form-control" placeholder="123"
+                                    [ngClass]="{ 'is-invalid': submitted && f_checkout.cvv_cartao.errors }" />
+                                <div *ngIf="submitted && f_checkout.cvv_cartao.errors" class="invalid-feedback">
+                                    <div *ngIf="f_checkout.cvv_cartao.errors.required">Preencha o cvv do
+                                        cartão</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div *ngIf="pagamentoSelecionado == 'boleto'" class="text-center mb-1 msgBoleto">
+                            O boleto será gerado no valor de <strong>{{dadosDaCobranca.valor_original | currency: 'BRL'}}</strong>
+                            com vencimento dia <strong>{{dadosDaCobranca.data_vencimento}}</strong>.
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-between">
+                        <div class="d-flex justify-content-end">
+                            <button (click)="verticalWizardPrevious()" type="button"
+                                class="btn btn-outline-secondary btn-prev" rippleEffect>
+                                <span class="align-middle">Voltar</span>
+                            </button>
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <button class="btn btn-success btn-prev" rippleEffect>
+                                <span class="align-middle">{{msgBotao}}</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>

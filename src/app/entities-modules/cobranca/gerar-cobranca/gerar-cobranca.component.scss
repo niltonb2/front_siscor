@@ -1,0 +1,24 @@
+@import '@core/scss/angular/libs/form-wizard.component.scss';
+@import '@core/scss/angular/libs/select.component.scss';
+@import '@core/scss/angular/libs/flatpickr.component.scss';
+
+.header-cadastro-estabelecimento {
+    pointer-events: none;
+}
+
+.body-cadastro-estabelecimento {
+    box-shadow: none !important;
+}
+
+.botao-novo-cliente {
+    margin-top: 10px;
+}
+
+.campo-cliente {
+    display: flex;
+    justify-content: space-between;
+
+    ng-select {
+        width: calc(100% - 58.19px);
+    }
+}

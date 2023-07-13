@@ -1,0 +1,48 @@
+<div *ngIf="!cadastro && !cadastroCliente" class="content-wrapper container-xxl p-0">
+    <div class="content-body">
+        <section id="home-page">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Cobrança</h4>
+                            <button (click)="mostrarTelaCadastro()" type="button" class="btn btn-success" rippleEffect>
+                                Nova Cobrança
+                            </button>
+                        </div>
+                    </div>
+
+<!--                     <div class="row" id="basic-table">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="table-responsive">
+                                        <h4 class="card-title text-center">Selecione o Estabelecimento</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <app-selecionar-estabelecimento></app-selecionar-estabelecimento>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+
+                    <div>
+                        <app-table-cobranca></app-table-cobranca>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+<app-gerar-cobranca 
+*ngIf="cadastro && !cadastroCliente" 
+(gerarCobrancaEvento)="fecharTelaCadastro()"
+(cadastrarClienteEvento)="mostrarCadastroCliente()"
+></app-gerar-cobranca>
+
+<app-cadastro-pessoa-cliente
+*ngIf="cadastroCliente"
+(cadastroClienteEvento)="fecharTelaCadastroCliente()"
+></app-cadastro-pessoa-cliente>

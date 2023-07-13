@@ -1,0 +1,50 @@
+@import '@core/scss/angular/libs/form-wizard.component.scss';
+@import '@core/scss/angular/libs/select.component.scss';
+
+.header-cadastro-estabelecimento {
+    //pointer-events: none;
+}
+
+.body-cadastro-estabelecimento {
+    box-shadow: none !important;
+}
+
+.bandeira-card {
+    height: 2.714rem !important;
+    text-align: center;
+}
+
+.btn-bandeira {
+    text-align: top;
+    object-fit: contain;
+  }
+
+.gerar-boleto {
+    padding: 107px 150px 107px 150px;
+
+    p {
+        font-size: 2rem;
+    }
+}
+
+.msgBoleto {
+    font-size: 1.4rem;
+}
+
+@media (max-width: 992px) { 
+
+    .header-cadastro-estabelecimento {
+        //pointer-events: none;
+        display: flex !important;
+        justify-content: space-between;
+        flex-direction: row !important;
+    }
+
+    .gerar-boleto {
+        padding: 107px 50px 107px 50px;
+    
+        p {
+            font-size: 1rem;
+        }
+    }
+}

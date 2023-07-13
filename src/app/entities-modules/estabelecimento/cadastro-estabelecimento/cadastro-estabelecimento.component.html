@@ -1,0 +1,408 @@
+<div class="content-wrapper container-xxl p-0">
+    <div class="content-body">
+        <section id="home-page">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Cadastro de Estabelecimento</h4>
+                            <button (click)="fecharTelaCadastroEstabelecimento()" type="button"
+                                class="btn btn-secondary" rippleEffect>
+                                <i data-feather="x" class="font-medium-3"></i>
+                            </button>
+                        </div>
+                        <section class="vertical-wizard">
+                            <div id="cadastroEstabelecimento"
+                                class="bs-stepper vertical vertical-wizard-example body-cadastro-estabelecimento">
+                                <!-- HEADER -->
+                                <div class="bs-stepper-header header-cadastro-estabelecimento">
+                                    <div class="step" data-target="#account-details-vertical">
+                                        <button type="button" class="step-trigger">
+                                            <span class="bs-stepper-box">1</span>
+                                            <span class="bs-stepper-label">
+                                                <span class="bs-stepper-title">Estabelecimento</span>
+                                            </span>
+                                        </button>
+                                    </div>
+                                    <div class="step" data-target="#personal-info-vertical">
+                                        <button type="button" class="step-trigger">
+                                            <span class="bs-stepper-box">2</span>
+                                            <span class="bs-stepper-label">
+                                                <span class="bs-stepper-title">Contato</span>
+                                            </span>
+                                        </button>
+                                    </div>
+                                    <div class="step" data-target="#address-step-vertical">
+                                        <button type="button" class="step-trigger">
+                                            <span class="bs-stepper-box">3</span>
+                                            <span class="bs-stepper-label">
+                                                <span class="bs-stepper-title">Endereço</span>
+                                            </span>
+                                        </button>
+                                    </div>
+                                    <div class="step" data-target="#gateway-step-vertical">
+                                        <button type="button" class="step-trigger">
+                                            <span class="bs-stepper-box">4</span>
+                                            <span class="bs-stepper-label">
+                                                <span class="bs-stepper-title">Gateway</span>
+                                            </span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <!-- BODY -->
+                                <div class="bs-stepper-content">
+                                    <form [formGroup]="formularioEstabelecimento"
+                                        (ngSubmit)="cadastrarEstabelecimento()">
+                                        <!-- ESTABELECIMENTO -->
+                                        <div id="account-details-vertical" class="content">
+                                            <div class="content-header">
+                                                <h5 class="mb-0">Dados do estabelecimento</h5>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group col-md-6">
+                                                    <div>
+                                                        <label class="form-label" for="documento-field">Documento
+                                                            *</label>
+                                                        <div class="input-group input-group-merge"
+                                                            [ngClass]="{ 'is-invalid': submitted && f_estabelecimento.documento.errors}">
+                                                            <input formControlName="documento" mask="CPF_CNPJ"
+                                                                type="text" id="documento-field" class="form-control"
+                                                                placeholder="CPF/CNPJ"
+                                                                [ngClass]="{ 'is-invalid': submitted && f_estabelecimento.documento.errors }" />
+                                                            <div class="input-group-append">
+                                                                <a (click)="consultaCnpj()" class="input-group-text"
+                                                                    id="basic-addon-search2" placement="top"
+                                                                    ngbTooltip="Buscar dados da empresa"><i
+                                                                        data-feather="search"></i></a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div *ngIf="submitted && f_estabelecimento.documento.errors"
+                                                        class="form-text text-danger">
+                                                        <div *ngIf="f_estabelecimento.documento.errors.required">
+                                                            Preencha o Documento</div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <div>
+                                                        <label class="form-label" for="vertical-username">Nome
+                                                            Fantasia</label>
+                                                        <input formControlName="fantasia" type="text"
+                                                            id="vertical-username" placeholder="Nome Fantasia"
+                                                            class="form-control" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-md-12">
+                                                    <div>
+                                                        <label class="form-label" for="vertical-username">Razão
+                                                            Social
+                                                            *</label>
+                                                        <input formControlName="nome" type="text" id="vertical-username"
+                                                            class="form-control"
+                                                            [ngClass]="{ 'is-invalid': submitted && f_estabelecimento.nome.errors }"
+                                                            placeholder="Razão Social" />
+                                                    </div>
+                                                    <div *ngIf="submitted && f_estabelecimento.nome.errors"
+                                                        class="form-text text-danger">
+                                                        <div *ngIf="f_estabelecimento.nome.errors.required">Preencha
+                                                            o
+                                                            nome</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex justify-content-end">
+                                                <a (click)="verticalWizardNext()" class="btn btn-primary btn-next"
+                                                    rippleEffect>
+                                                    <span class="align-middle d-sm-inline-block d-none">Próximo</span>
+                                                    <i data-feather="arrow-right"
+                                                        class="align-middle ml-sm-25 ml-0"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <!-- CONTATO -->
+                                        <div id="personal-info-vertical" class="content">
+                                            <div class="content-header">
+                                                <h5 class="mb-0">Dados de contato</h5>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group col-md-6">
+                                                    <label class="form-label" for="vertical-first-name">Telefone</label>
+                                                    <input formControlName="telefone" mask="(00) 0000-0000" type="text"
+                                                        id="vertical-first-name" class="form-control"
+                                                        placeholder="DDD + Telefone" />
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label class="form-label" for="vertical-last-name">Celular
+                                                        (WhatsApp) *</label>
+                                                    <input formControlName="celular" mask="(00) 0 0000-0000" type="text"
+                                                        id="vertical-last-name" class="form-control"
+                                                        placeholder="DDD + Celular"
+                                                        [ngClass]="{ 'is-invalid': submitted && f_estabelecimento.celular.errors }" />
+                                                    <div *ngIf="submitted && f_estabelecimento.celular.errors"
+                                                        class="form-text text-danger">
+                                                        <div *ngIf="f_estabelecimento.celular.errors.required">
+                                                            Preencha o Celular</div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label class="form-label" for="vertical-last-name">E-mail
+                                                        *</label>
+                                                    <input formControlName="email" type="text" id="vertical-last-name"
+                                                        class="form-control" placeholder="email@email.com"
+                                                        [ngClass]="{ 'is-invalid': submitted && f_estabelecimento.email.errors }" />
+                                                    <div *ngIf="submitted && f_estabelecimento.email.errors"
+                                                        class="form-text text-danger">
+                                                        <div *ngIf="f_estabelecimento.email.errors.required">
+                                                            Preencha o Celular</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex justify-content-between">
+                                                <a (click)="verticalWizardPrevious()"
+                                                    class="btn btn-outline-secondary btn-next" rippleEffect>
+                                                    <i data-feather="arrow-left" class="align-middle ml-sm-25 ml-0"></i>
+                                                    <span class="align-middle d-sm-inline-block d-none">Voltar</span>
+                                                </a>
+                                                <a (click)="verticalWizardNext()" class="btn btn-primary btn-prev"
+                                                    rippleEffect>
+                                                    <span class="align-middle d-sm-inline-block d-none">Próximo</span>
+                                                    <i data-feather="arrow-right"
+                                                        class="align-middle mr-sm-25 mr-0"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <!-- ENDEREÇO -->
+                                        <div id="address-step-vertical" class="content">
+
+                                            <div class="content-header">
+                                                <h5 class="mb-0">Dados de Endereço</h5>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group col-md-2">
+                                                    <label class="form-label" for="modern-cep">CEP *</label>
+                                                    <div class="input-group input-group-merge"
+                                                        [ngClass]="{ 'is-invalid': submitted && f_estabelecimento.cep.errors }">
+                                                        <input formControlName="cep" mask="00000-000" type="text"
+                                                            id="modern-cep" class="form-control" placeholder="00000-000"
+                                                            [ngClass]="{ 'is-invalid': submitted && f_estabelecimento.cep.errors }" />
+                                                        <div class="input-group-append">
+                                                            <a (click)="consultaCep()" class="input-group-text"
+                                                                id="basic-addon-search2"><i
+                                                                    data-feather="search"></i></a>
+                                                        </div>
+                                                    </div>
+                                                    <div *ngIf="submitted && f_estabelecimento.cep.errors"
+                                                        class="invalid-feedback">
+                                                        <div *ngIf="f_estabelecimento.cep.errors.required">Preencha o
+                                                            cep
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-md-5">
+                                                    <label class="form-label" for="modern-logradouro">Endereço
+                                                        *</label>
+                                                    <input formControlName="logradouro" type="text"
+                                                        id="modern-logradouro" class="form-control"
+                                                        placeholder="Avenida 0 Rua 0"
+                                                        [ngClass]="{ 'is-invalid': submitted && f_estabelecimento.logradouro.errors }" />
+                                                    <div *ngIf="submitted && f_estabelecimento.logradouro.errors"
+                                                        class="invalid-feedback">
+                                                        <div *ngIf="f_estabelecimento.logradouro.errors.required">
+                                                            Preencha o logradouro</div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-md-5">
+                                                    <label class="form-label" for="modern-bairro">Bairro *</label>
+                                                    <input formControlName="bairro" type="text" id="modern-bairro"
+                                                        class="form-control" placeholder="Bairro"
+                                                        [ngClass]="{ 'is-invalid': submitted && f_estabelecimento.bairro.errors }" />
+                                                    <div *ngIf="submitted && f_estabelecimento.bairro.errors"
+                                                        class="invalid-feedback">
+                                                        <div *ngIf="f_estabelecimento.logradouro.errors.required">
+                                                            Preencha o bairro</div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-md-2">
+                                                    <label class="form-label" for="modern-uf">UF *</label>
+                                                    <ng-select formControlName="uf"
+                                                        [ngClass]="{ 'is-invalid': submitted && f_estabelecimento.bairro.errors }">
+                                                        <ng-option *ngFor="let uf of ufs" [value]="uf">
+                                                            {{uf}} </ng-option>
+                                                    </ng-select>
+                                                    <div *ngIf="submitted && f_estabelecimento.bairro.errors"
+                                                        class="invalid-feedback">
+                                                        <div *ngIf="f_estabelecimento.logradouro.errors.required">
+                                                            Preencha o uf</div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-md-5">
+                                                    <label class="form-label" for="city3">Complemento</label>
+                                                    <input formControlName="complemento" type="text" id="city3"
+                                                        class="form-control" placeholder="Complemento" />
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <label class="form-label" for="modern-cidade">Cidade *</label>
+                                                    <input formControlName="cidade" type="text" id="modern-cidade"
+                                                        class="form-control" placeholder="Cidade"
+                                                        [ngClass]="{ 'is-invalid': submitted && f_estabelecimento.bairro.errors }" />
+                                                    <div *ngIf="submitted && f_estabelecimento.bairro.errors"
+                                                        class="invalid-feedback">
+                                                        <div *ngIf="f_estabelecimento.logradouro.errors.required">
+                                                            Preencha o uf</div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-md-2">
+                                                    <label class="form-label" for="modern-numero">Número</label>
+                                                    <input formControlName="numero" type="text" id="modern-numero"
+                                                        class="form-control" placeholder="00" />
+                                                </div>
+                                            </div>
+                                            <div class="d-flex justify-content-between">
+                                                <a (click)="verticalWizardPrevious()"
+                                                    class="btn btn-outline-secondary btn-next" rippleEffect>
+                                                    <i data-feather="arrow-left" class="align-middle ml-sm-25 ml-0"></i>
+                                                    <span class="align-middle d-sm-inline-block d-none">Voltar</span>
+                                                </a>
+                                                <a (click)="verticalWizardNext()" class="btn btn-primary btn-prev"
+                                                    rippleEffect>
+                                                    <span class="align-middle d-sm-inline-block d-none">Próximo</span>
+                                                    <i data-feather="arrow-right"
+                                                        class="align-middle mr-sm-25 mr-0"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <!-- GATEWAY -->
+                                        <div id="gateway-step-vertical" class="content">
+                                            <div class="content-header">
+                                                <h5 class="mb-0">Gateway de Pagamento</h5>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group col-md-12">
+                                                    <label class="d-flex">Gateway * <app-infos-field
+                                                            mensagem="Selecione o gateway de pagamento">
+                                                        </app-infos-field></label>
+                                                    <ng-select formControlName="nome_gateway"
+                                                        [ngClass]="{ 'is-invalid': submitted && f_estabelecimento.nome.errors }">
+                                                        <!-- <ng-option [value]="'pagarme'"> PAGARME </ng-option> -->
+                                                        <ng-option [value]="'zoop'"> ZOOP </ng-option>
+                                                    </ng-select>
+                                                    <div *ngIf="submitted && f_estabelecimento.nome.errors"
+                                                        class="invalid-feedback">
+                                                        <div *ngIf="f_estabelecimento.nome.errors.required">Selecione o
+                                                            Gateway
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group col-md-6">
+                                                    <label class="form-label" for="vertical-first-name">Marketplace
+                                                        ID
+                                                        * <app-infos-field
+                                                            mensagem="Informe a chave do Marketplace do gateway de pagamento">
+                                                        </app-infos-field></label>
+                                                    <input formControlName="marketplace_id" type="text"
+                                                        class="form-control"
+                                                        [ngClass]="{ 'is-invalid': submitted && f_estabelecimento.marketplace_id.errors }" />
+                                                    <div *ngIf="submitted && f_estabelecimento.marketplace_id.errors"
+                                                        class="invalid-feedback">
+                                                        <div *ngIf="f_estabelecimento.marketplace_id.errors.required">
+                                                            Preencha o
+                                                            Marketplace ID
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label class="form-label" for="seller-id">Seller ID
+                                                        * <app-infos-field
+                                                            mensagem="Informe seu código de vendedor do gateway de pagamento">
+                                                        </app-infos-field></label>
+                                                    <input formControlName="seller_id" type="text" id="seller-id"
+                                                        class="form-control"
+                                                        [ngClass]="{ 'is-invalid': submitted && f_estabelecimento.seller_id.errors }" />
+                                                    <div *ngIf="submitted && f_estabelecimento.seller_id.errors"
+                                                        class="invalid-feedback">
+                                                        <div *ngIf="f_estabelecimento.seller_id.errors.required">
+                                                            Preencha o
+                                                            Seller ID
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="content-header">
+                                                <h5 class="mb-0">Configurações de Formas de Pagamento</h5>
+                                            </div>
+                                            <div class="row mb-1">
+                                                <div class="col-md-12">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" (change)="onCheck()"
+                                                            class="custom-control-input" id="customCheck1" />
+                                                        <label class="custom-control-label"
+                                                            for="customCheck1">Permitir pagar com cartão de crédito</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div *ngIf="permitirCartao" class="row">
+                                                <div class="form-group col-md-6">
+                                                    <label class="form-label" for="valor-parcelas">Valor mínimo de
+                                                        parcela* <app-infos-field
+                                                            mensagem="Informe o valor mínimo para parcela">
+                                                        </app-infos-field></label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text">R$</span>
+                                                        </div>
+                                                        <input formControlName="valor_min_parcelas" type="text"
+                                                            id="valor-parcelas" class="form-control" currencyMask
+                                                            [options]="{ prefix: '', thousands: '.', decimal: ',', align : 'left' }"
+                                                            [ngClass]="{ 'is-invalid': permitirCartao && submitted && f_estabelecimento.valor_min_parcelas.errors }" />
+                                                        <div *ngIf="permitirCartao && submitted && f_estabelecimento.valor_min_parcelas.errors"
+                                                            class="invalid-feedback">
+                                                            <div
+                                                                *ngIf="permitirCartao && f_estabelecimento.valor_min_parcelas.errors.required">
+                                                                Preencha o
+                                                                valor mínimo de parcelas
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label class="form-label" for="qtde-parcelas">Quantidade máxima
+                                                        de
+                                                        parcelas: *<app-infos-field
+                                                            mensagem="Informe a quantidade máxima de parcelas">
+                                                        </app-infos-field></label>
+                                                    <input mask="00 || 0" formControlName="qtde_max_parcelas"
+                                                        type="text" id="qtde-parcelas" class="form-control"
+                                                        [ngClass]="{ 'is-invalid': permitirCartao &&  submitted && f_estabelecimento.qtde_max_parcelas.errors }" />
+                                                    <div *ngIf="permitirCartao && submitted && f_estabelecimento.qtde_max_parcelas.errors"
+                                                        class="invalid-feedback">
+                                                        <div
+                                                            *ngIf="permitirCartao && f_estabelecimento.qtde_max_parcelas.errors.required">
+                                                            Preencha a quantidade máxima de parcelas
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex justify-content-between">
+                                                <a (click)="verticalWizardPrevious()"
+                                                    class="btn btn-outline-secondary btn-next" rippleEffect>
+                                                    <i data-feather="arrow-left" class="align-middle ml-sm-25 ml-0"></i>
+                                                    <span class="align-middle d-sm-inline-block d-none">Voltar</span>
+                                                </a>
+                                                <button class="btn btn-success btn-prev" rippleEffect>
+                                                    <span class="align-middle d-sm-inline-block d-none">Finalizar
+                                                        Cadastro</span>
+                                                    <i data-feather="check" class="align-middle mr-sm-25 mr-0"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>

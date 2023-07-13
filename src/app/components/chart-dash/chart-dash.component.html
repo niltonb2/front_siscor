@@ -1,0 +1,26 @@
+<section id="line-chart">
+    <!-- Line Chart Starts-->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <div>
+                        <h4 class="card-title">Cobranças por Status</h4>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <canvas
+                        class="line-chart-ex chartjs"
+                        baseChart height="300"
+                        [datasets]="lineChart.datasets"
+                        [chartType]="lineChart.chartType"
+                        [options]="lineChart.options"
+                        [labels]="lineChart.labels"
+                        [plugins]="plugins">
+                    </canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--/ Line Chart Ends-->
+</section>

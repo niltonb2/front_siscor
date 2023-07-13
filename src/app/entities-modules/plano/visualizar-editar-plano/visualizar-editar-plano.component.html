@@ -1,0 +1,105 @@
+<div class="content-wrapper container-xxl p-0">
+    <div class="content-body">
+        <section id="home-page">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Editar Plano</h4>
+                            <button (click)="fecharTelaEdicaoPlano()" type="button" class="btn btn-secondary" rippleEffect>
+                                <i data-feather="x" class="font-medium-3"></i>
+                            </button>
+                        </div>
+
+                        <div class="card-body">
+
+                            <form class="form" [formGroup]="formularioPlano" (ngSubmit)="editarPlano()">
+                                <h5>Contato</h5>
+                                <div class="row">
+                                    <div class="col-md-2 col-12">
+                                        <div class="form-group">
+                                            <label for="first-name-column">Tipo *</label>
+                                            <ng-select formControlName="tipo"
+                                                [ngClass]="{ 'is-invalid': submitted && f_plano.tipo.errors }">
+                                                <ng-option [value]="1">mensal</ng-option>
+                                                <ng-option [value]="2">anual</ng-option>
+                                            </ng-select>
+                                            <div *ngIf="submitted && f_plano.tipo.errors" class="invalid-feedback">
+                                                <div *ngIf="f_plano.tipo.errors.required">Preencha o tipo</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 col-12">
+                                        <div class="form-group">
+                                            <label for="last-name-column">Valor *</label>
+                                            <div>
+                                                <div class="input-group mb-2"
+                                                    [ngClass]="{ 'is-invalid': submitted && f_plano.valor.errors }">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">R$</span>
+                                                    </div>
+                                                    <input
+                                                        [ngClass]="{ 'is-invalid': submitted && f_plano.valor.errors }"
+                                                        currencyMask [formControlName]="'valor'"
+                                                        [options]="{ prefix: '', thousands: '.', decimal: ',', align : 'left' }"
+                                                        class="form-control mr-1" type="text">
+                                                    <div *ngIf="submitted && f_plano.valor.errors"
+                                                        class="invalid-feedback">
+                                                        <div *ngIf="f_plano.valor.errors.required">
+                                                            Preencha o valor</div>
+                                                    </div>
+                                                </div>
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" (change)="onCheck()"
+                                                        class="custom-control-input" id="customCheck1" />
+                                                    <label class="custom-control-label"
+                                                        for="customCheck1">Cálculo</label>
+                                                    <app-infos-field
+                                                        mensagem="O valor do plano será definido pela soma de valores dos produtos/serviços">
+                                                    </app-infos-field>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8 col-12">
+                                        <div class="form-group">
+                                            <label for="last-name-column">Descrição *</label>
+                                            <input formControlName="descricao" type="email" id="last-name-column"
+                                                class="form-control" placeholder="Descrição do produto ou serviço"
+                                                [ngClass]="{ 'is-invalid': submitted && f_plano.descricao.errors }" />
+                                            <div *ngIf="submitted && f_plano.descricao.errors" class="invalid-feedback">
+                                                <div *ngIf="f_plano.descricao.errors.required">Preencha a descrição
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label for="last-name-column">Produtos/Serviços *</label>
+                                        <ng-select [items]="customTag" (change)="atualizarValor($event)" [addTag]="selectAddTagMethod"
+                                            [hideSelected]="true" multiple="true" bindLabel="name"
+                                            formControlName="produtos">
+                                            <ng-template ng-label-tmp let-item="item" let-clear="clear">
+                                                <span class="ng-value-label"> {{ item.name }}</span>
+                                                <span class="ng-value-icon right" (click)="clear(item)"
+                                                    aria-hidden="true">×</span>
+                                            </ng-template>
+                                        </ng-select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 d-flex justify-content-end mt-1">
+                                        <button type="submit" rippleEffect class="btn btn-success mr-1">Salvar</button>
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>

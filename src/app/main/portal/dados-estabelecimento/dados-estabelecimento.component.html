@@ -1,0 +1,12 @@
+<div class="modal-header">
+    <h5 class="modal-title" id="myModalLabel160">Dados do Credor</h5>
+    <button type="button" class="close" (click)="dismissModal()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body text-center" tabindex="0" ngbAutofocus>
+    <h4>Nome: <strong>{{dadosDaCobranca.estabelecimento_nome}}</strong>?</h4>
+</div>
+<div class="modal-footer">
+    <a [href]="linkWhatsApp" target="_blank" type="button" class="btn btn-success btn-block" (click)="wpp()">Enviar mensagem no WhatsApp</a>
+</div>
